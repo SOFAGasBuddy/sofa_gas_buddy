@@ -101,7 +101,7 @@ class _HelpPageState extends State<HelpPage> {
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             _launchURL(
-                              'https://github.com/SOFAGasBuddy/SOFAGasBuddy/blob/main/privacy.md',
+                              'https://github.com/SOFAGasBuddy/sofa_gas_buddy/blob/main/privacy.md',
                             );
                           },
                       ),
