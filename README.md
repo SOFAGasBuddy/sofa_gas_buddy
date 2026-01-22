@@ -1,7 +1,6 @@
 # SOFAGasBuddy
 
-[![CodeQL](https://github.com/SOFAGasBuddy/SOFAGasBuddy/actions/workflows/codeql.yml/badge.svg)](https://github.com/SOFAGasBuddy/SOFAGasBuddy/actions/workflows/codeql.yml)
-[![Android Build](https://github.com/SOFAGasBuddy/SOFAGasBuddy/actions/workflows/build-android.yml/badge.svg)](https://github.com/SOFAGasBuddy/SOFAGasBuddy/actions/workflows/build-android.yml)
+[![Android Build](https://github.com/SOFAGasBuddy/sofa_gas_buddy/actions/workflows/build.yml/badge.svg)](https://github.com/SOFAGasBuddy/sofa_gas_buddy/actions/workflows/build.yml)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)
 [![PRs welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
