@@ -1,7 +1,7 @@
 name: sofa_gas_buddy
 description: "A helper for the AAFES gas program in Germany"
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.0+1 #Don't change this, Gradle automatically updates the build/version number.
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
