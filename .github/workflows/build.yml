@@ -17,8 +17,8 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3.12.0
         with:
-          distribution: 'adoopt'
-          java-version: '17'
+          distribution: 'temurin'
+          java-version: '25'
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
