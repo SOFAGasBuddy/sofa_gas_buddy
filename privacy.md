@@ -1,0 +1,26 @@
+
+# SOFAGasBuddy Privacy Policy
+
+## 22 January 2026
+
+
+
+# What do we mean by "personal information?"
+
+For us, "personal information" or "personally identifiable information" (PII) means your social security number and vehicle registration number.
+
+If we store your personal information with information that is non-personal, we will consider the combination as personal information. If we remove all personal information from a set of data then the remaining is non-personal information.
+
+# How do we learn information about you?
+
+Technically "we" never get access to your PII. It is stored on your device and it is necessary for the app to function.
+
+# What do we do with your information once we have it? How do we store and protect your personal information?
+
+It is stored on the device in an encrypted file. The only time that information leaves your device is when it is sent to [AAFES' servers](https://odin.aafes.com/esso/), for the retrieval of information necessary for the app to function. This is essentially no different than a user going to AAFES' servers and inputting the data by hand. For more information about the secure storage of your PII, see this [page](https://pub.dev/packages/flutter_secure_storage), and [this one](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard).
+
+# When do we share your information with others?
+
+Never. Not now or ever. Well, technically AAFES, but that's the whole point of the app. If anyone ever claims to be associated with SOFAGasBuddy and is requesting your PII, it is a scam. We will never share your information (as we do not have access to it) and we will never ask you for it.
+
+For further information, please contact [SOFAGasBuddy@gmail.com](mailto:SOFAGasBuddy@gmail.com)
