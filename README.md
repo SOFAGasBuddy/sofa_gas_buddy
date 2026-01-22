@@ -4,6 +4,6 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)
 [![PRs welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-A simple app for Android to make interacting with the AAFES ESSO program website easier.
+A simple app for Android to make interacting with the AAFES SOFA gas program easier.
 
 Pull requests welcome
