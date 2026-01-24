@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sofa_gas_buddy/esso_data.dart';
+import 'package:sofa_gas_buddy/utils/utils.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -8,6 +9,7 @@ class MainPage extends StatefulWidget {
   @override
   State<MainPage> createState() => _MainPageState();
 }
+
 
 class _MainPageState extends State<MainPage> {
   @override
@@ -23,56 +25,13 @@ class _MainPageState extends State<MainPage> {
   String labelRefreshData = "";
   final storage = const FlutterSecureStorage();
 
-  static String? getPrettyDate(DateTime d) {
-    final difference = DateTime.now().difference(d);
-    int dayDiff = difference.inDays;
-    int secDiff = difference.inSeconds;
-
-    if (dayDiff < 0 || dayDiff >= 31) {
-      return null;
-    }
-
-    if (dayDiff == 0) {
-      if (secDiff < 60) {
-        return "Just now";
-      }
-
-      if (secDiff < 120) {
-        return "1 minute ago";
-      }
-
-      if (secDiff < 3600) {
-        return "${(secDiff / 60).floor()} minutes ago";
-      }
-
-      if (secDiff < 7200) {
-        return "1 hour ago";
-      }
-
-      if (secDiff < 86400) {
-        return "${(secDiff / 3600).floor()} hours ago";
-      }
-    }
-
-    if (dayDiff == 1) {
-      return "Yesterday";
-    }
-    if (dayDiff < 7) {
-      return "$dayDiff days ago";
-    }
-    if (dayDiff < 31) {
-      return "Over ${(dayDiff / 7).floor()} weeks ago";
-    }
-    return null;
-  }
-
   Future<void> _lastRefreshedTime() async {
     String? lastRefresh = await storage.read(key: "LastRefresh");
 
     if (lastRefresh != null) {
       DateTime lr = DateTime.parse(lastRefresh);
       setState(() {
-        labelRefreshData = "Last Refresh: ${getPrettyDate(lr)}";
+        labelRefreshData = "Last Refresh: ${Utils.getPrettyDate(lr)}";
       });
     }
   }
@@ -126,7 +85,7 @@ class _MainPageState extends State<MainPage> {
       }
       setState(() {
         labelData = buffer.toString();
-        labelRefreshData = "Last Refresh: ${getPrettyDate(DateTime.now())}";
+        labelRefreshData = "Last Refresh: ${Utils.getPrettyDate(DateTime.now())}";
       });
       await storage.write(key: "LastData", value: buffer.toString());
       await storage.write(key: "LastRefresh", value: DateTime.now().toString());
