@@ -14,7 +14,8 @@ void main() {
     });
 
     test('returns "x minutes ago" for a timestamp x minutes ago', () {
-      final fiveMinutesAgo = DateTime.now().subtract(const Duration(minutes: 5));
+      final fiveMinutesAgo =
+          DateTime.now().subtract(const Duration(minutes: 5));
       expect(Utils.getPrettyDate(fiveMinutesAgo), '5 minutes ago');
     });
 

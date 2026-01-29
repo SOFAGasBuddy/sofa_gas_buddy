@@ -10,90 +10,74 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-
 class _MainPageState extends State<MainPage> {
-  @override
-  void initState() {
-    super.initState();
-    // Load saved data
-    _loadOldData();
-    _lastRefreshedTime();
-  }
-
   EssoData ed = EssoData();
   String labelData = "";
   String labelRefreshData = "";
   final storage = const FlutterSecureStorage();
 
-  Future<void> _lastRefreshedTime() async {
-    String? lastRefresh = await storage.read(key: "LastRefresh");
-
-    if (lastRefresh != null) {
-      DateTime lr = DateTime.parse(lastRefresh);
-      setState(() {
-        labelRefreshData = "Last Refresh: ${Utils.getPrettyDate(lr)}";
-      });
-    }
+  @override
+  void initState() {
+    super.initState();
+    _loadInitialData();
   }
 
-  Future<void> _loadOldData() async {
-    try {
-      String? lastData = await storage.read(key: "LastData");
-
-      if (lastData != null) {
-        setState(() {
-          labelData = lastData;
-        });
-      }
-    } catch (ex) {
-      await storage.write(key: "LAST_ERROR", value: "Unable to load old data");
+  Future<void> _loadInitialData() async {
+    final oldData = await ed.loadOldData();
+    final lastRefresh = await ed.lastRefreshedTime();
+    if (mounted) {
+      setState(() {
+        labelData = oldData;
+        labelRefreshData = lastRefresh;
+      });
     }
   }
 
   Future<void> _refreshData() async {
     try {
-      //get vrn, id and idType from storage
-      String? vrn = await storage.read(key: "vrn");
-      String? id = await storage.read(key: "id");
-      String? idType = await storage.read(key: "idType");
+      var (accountData, refreshData, status) = await ed.getData();
 
-      if (idType == null || id == null || vrn == null) {
+      if (status == Status.blankCreds) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text(
                 'Please enter a valid ID, VRN and ID Type on the Settings page')));
         return;
       }
-      var (balance, cars, success) = await ed.getData(idType, id, vrn);
+      if (status == Status.badResponse) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+                'Failed to retrieve data from server, please try again.')));
+        return;
+      }
 
-      if (!success || cars == null) {
-        await storage.write(key: "LAST_ERROR", value: "Failed to get data");
+      if (status != Status.success) {
+        await storage.write(key: "LAST_ERROR", value: "$status");
         setState(() {
           labelData = "Failed to retrieve data. Please try again.";
         });
         return;
       }
-
-      final buffer = StringBuffer();
-      buffer.writeln("Account Balance: $balance\n");
-      for (var car in cars) {
-        if (car.status == "Active") {
-          buffer.writeln("VRN: ${car.vrn}");
-          buffer.writeln("Ration Remaining: ${car.rationRemaining}L");
-          buffer.writeln("Expiration Date: ${car.expDate}\n");
-        }
-      }
       setState(() {
-        labelData = buffer.toString();
-        labelRefreshData = "Last Refresh: ${Utils.getPrettyDate(DateTime.now())}";
+        labelData = accountData;
+        labelRefreshData = refreshData;
       });
-      await storage.write(key: "LastData", value: buffer.toString());
-      await storage.write(key: "LastRefresh", value: DateTime.now().toString());
     } catch (ex) {
       await storage.write(key: "LAST_ERROR", value: "$ex");
-      setState(() {
-        labelData = "An error occurred while fetching data.";
-      });
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Failed to retrieve data from server, please try again. Currently displaying last known information.')));
+      String? oldData = await ed.loadOldData();
+      String? lastRefresh = await ed.lastRefreshedTime();
+
+      if (mounted) {
+        setState(() {
+          labelData = oldData;
+          labelRefreshData = lastRefresh;
+        });
+      }
     }
   }
 
@@ -104,7 +88,7 @@ class _MainPageState extends State<MainPage> {
 
     List<InlineSpan> buildSpans(String data) {
       List<InlineSpan> spans = [];
-      final lines = data.split('\n');
+      final lines = data.split('');
       for (var i = 0; i < lines.length; i++) {
         final line = lines[i];
         if (line.isNotEmpty) {
@@ -121,7 +105,7 @@ class _MainPageState extends State<MainPage> {
         }
 
         if (i < lines.length - 1) {
-          spans.add(const TextSpan(text: '\n'));
+          spans.add(const TextSpan(text: ''));
         }
       }
       return spans;

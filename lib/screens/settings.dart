@@ -56,7 +56,8 @@ class _SettingsPageState extends State<SettingsPage> {
           const SnackBar(
             content: Text(
               'Please select an ID Type.',
-              selectionColor: Colors.black,),
+              selectionColor: Colors.black,
+            ),
             backgroundColor: Colors.yellowAccent,
             duration: Duration(seconds: 5),
           ),
@@ -75,8 +76,9 @@ class _SettingsPageState extends State<SettingsPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text(
-                  'Social Security Number is invalid. Please re-enter it.',
-                selectionColor: Colors.black,),
+                'Social Security Number is invalid. Please re-enter it.',
+                selectionColor: Colors.black,
+              ),
               backgroundColor: Colors.yellowAccent,
               duration: Duration(seconds: 5),
             ),
@@ -85,13 +87,14 @@ class _SettingsPageState extends State<SettingsPage> {
         return;
       }
     }
-    if (vrnValue == '' ) {
+    if (vrnValue == '') {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
               'Please enter a Vehicle Registration Number.',
-              selectionColor: Colors.black,),
+              selectionColor: Colors.black,
+            ),
             backgroundColor: Colors.yellowAccent,
             duration: Duration(seconds: 5),
           ),

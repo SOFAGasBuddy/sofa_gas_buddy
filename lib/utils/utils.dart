@@ -1,3 +1,5 @@
+enum Status { success, blankCreds, badResponse, genericError, dataParseError }
+
 class Utils {
   static String? getPrettyDate(DateTime d) {
     final difference = DateTime.now().difference(d);
