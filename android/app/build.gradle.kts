@@ -1,3 +1,4 @@
+@file:Suppress("DEPRECATION")
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -11,6 +12,7 @@ plugins {
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
+
 val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
@@ -22,33 +24,31 @@ android {
     //compileSdk = flutter.compileSdkVersion
     compileSdk = 36
     //ndkVersion = flutter.ndkVersion
-    ndkVersion = "27.0.12077973"
+    ndkVersion = "28.2.13676358"
 
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-
+    // Moved jvmTarget configuration to tasks.withType to avoid deprecated DSL issues in 'android' block
+    
     defaultConfig {
         applicationId = "com.cyberaustin.sofagasbuddy"
         minSdk = 24
         targetSdk = 36
         versionCode = (System.currentTimeMillis() / 1000).toInt()
-        versionName = flutter.versionName + "+" + SimpleDateFormat("yyMMdd.HHmm", Locale.US).apply {
+        versionName = (flutter.versionName ?: "1.0.0") + "+" + SimpleDateFormat("yyMMdd.HHmm", Locale.US).apply {
             timeZone = TimeZone.getTimeZone("UTC")
         }.format(Date())
     }
     signingConfigs {
         create("release") {
-            keyAlias = keystoreProperties["keyAlias"] as String
-            keyPassword = keystoreProperties["keyPassword"] as String
+            keyAlias = keystoreProperties["keyAlias"] as? String
+            keyPassword = keystoreProperties["keyPassword"] as? String
             storeFile = keystoreProperties["storeFile"]?.let { file(it) }
-            storePassword = keystoreProperties["storePassword"] as String
+            storePassword = keystoreProperties["storePassword"] as? String
         }
     }
     buildTypes {
@@ -57,6 +57,12 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("release")
         }
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 }
 

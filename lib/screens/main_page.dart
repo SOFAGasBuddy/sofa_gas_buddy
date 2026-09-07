@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sofa_gas_buddy/esso_data.dart';
 import 'package:sofa_gas_buddy/utils/utils.dart';
+import 'package:sofa_gas_buddy/screens/final_version.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -120,6 +121,33 @@ class _MainPageState extends State<MainPage> {
             onPressed: _refreshData,
             tooltip: 'Refresh Data',
             child: const Icon(Icons.update),
+          ),
+        ),
+        const SizedBox(height: 16),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const FinalVersionPage()),
+            );
+          },
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.info_outline,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer),
+                const SizedBox(width: 12),
+                const Expanded(child: Text("Important announce, please read!")),
+                const Icon(Icons.arrow_forward_ios, size: 16),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 16),

@@ -4,6 +4,7 @@ import 'package:sofa_gas_buddy/screens/about.dart';
 import 'package:sofa_gas_buddy/screens/help.dart';
 import 'package:sofa_gas_buddy/screens/settings.dart';
 import 'package:sofa_gas_buddy/screens/app_license.dart';
+import 'package:sofa_gas_buddy/screens/final_version.dart';
 
 void main() {
   runApp(const SGB());
@@ -42,6 +43,7 @@ class _HomeState extends State<Home> {
   static const List<Widget> _widgetOptions = <Widget>[
     MainPage(),
     SettingsPage(),
+    FinalVersionPage(),
     HelpPage(),
     AboutPage(),
     AppLicensePage(),
@@ -87,19 +89,24 @@ class _HomeState extends State<Home> {
               onTap: () => _onItemTapped(1),
             ),
             ListTile(
-              title: const Text('Help'),
+              title: const Text('Important Announcement!'),
               selected: _selectedIndex == 2,
               onTap: () => _onItemTapped(2),
             ),
             ListTile(
-              title: const Text('About'),
+              title: const Text('Help'),
               selected: _selectedIndex == 3,
               onTap: () => _onItemTapped(3),
             ),
             ListTile(
-              title: const Text('License'),
+              title: const Text('About'),
               selected: _selectedIndex == 4,
               onTap: () => _onItemTapped(4),
+            ),
+            ListTile(
+              title: const Text('License'),
+              selected: _selectedIndex == 5,
+              onTap: () => _onItemTapped(5),
             ),
           ],
         ),
